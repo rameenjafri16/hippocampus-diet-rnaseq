@@ -53,6 +53,8 @@ salmon quant \
 
 Library type was automatically detected (`-l A`). Transcript-level counts were imported into R using the `tximport` package (ADD VERSION), with transcript-to-gene mapping derived from the Ensembl annotation.
 
+Note: while Wahl et al. (2018) used a Tophat/featureCounts pipeline, we used Salmon for quantification as it represents current best practice, offering improved speed and accuracy for transcript-level quantification.
+
 ### 3. Differential Expression Analysis
 
 Differential expression analysis will be performed using DESeq2 (ADD VERSION) in R (ADD VERSION). Raw count matrices will be constructed from Salmon output using tximport. Sex will be included as a covariate in the design formula to account for known sex-specific effects on nutrient-sensing pathways reported by Wahl et al. (2018):
@@ -91,6 +93,7 @@ Based on the findings of Wahl et al. (2018) and the broader dietary restriction 
 **Inflammatory pathways:** Anti-inflammatory cytokine signaling (particularly IL-10 related pathways) may be enriched in the low-protein groups based on prior findings.
 
 **Sex differences:** The original study identified sex-specific effects on nutrient-sensing proteins. If sex is included as a covariate in the DESeq2 model, we may observe reduced noise and improved statistical power.
+
 
 ---
 
