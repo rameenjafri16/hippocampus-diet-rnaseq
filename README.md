@@ -51,13 +51,13 @@ salmon quant \
     -o salmon_output/SAMPLE_ID
 ```
 
-Library type was automatically detected (`-l A`). Transcript-level counts were imported into R using the `tximport` package (ADD VERSION), with transcript-to-gene mapping derived from the Ensembl annotation.
+Transcript-level counts were imported into R using the `tximport` package (v1.36.1), with transcript-to-gene mapping derived from the Ensembl annotation.
 
-Note: while Wahl et al. (2018) used a Tophat/featureCounts pipeline, we used Salmon for quantification as it represents current best practice, offering improved speed and accuracy for transcript-level quantification.
+Note: while Wahl et al. (2018) used a Tophat/featureCounts pipeline in the original paper, I used Salmon for quantification as it represents current best practice, offering improved speed and accuracy for transcript-level quantification.
 
 ### 3. Differential Expression Analysis
 
-Differential expression analysis will be performed using DESeq2 (ADD VERSION) in R (ADD VERSION). Raw count matrices will be constructed from Salmon output using tximport. Sex will be included as a covariate in the design formula to account for known sex-specific effects on nutrient-sensing pathways reported by Wahl et al. (2018):
+Differential expression analysis will be performed using DESeq2 (v1.48.2) in R (v2025.09.2+418). Raw count matrices will be constructed from Salmon output using tximport. Sex will be included as a covariate in the design formula to account for known sex-specific effects on nutrient-sensing pathways reported by Wahl et al. (2018):
 
 ```r
 dds <- DESeqDataSetFromTximport(txi, colData = metadata, design = ~ sex + diet)
@@ -73,7 +73,7 @@ Genes with an adjusted p-value (Benjamini-Hochberg correction) < 0.05 and absolu
 
 ### 4. Visualization of Data Structure
 
-Overall data structure will be assessed using principal component analysis (PCA) on variance-stabilizing transformed (VST) counts. A heatmap of the top 50 most variable genes will also be generated using the `pheatmap` package.
+Overall data structure will be assessed using a sample distance heatmap on variance-stabilizing transformed (VST) counts. A heatmap of the top 50 most variable genes will also be generated using the `pheatmap` package.
 
 ### 5. Functional Annotation and Enrichment Analysis
 
@@ -94,6 +94,10 @@ Based on the findings of Wahl et al. (2018) and the broader dietary restriction 
 
 **Sex differences:** The original study identified sex-specific effects on nutrient-sensing proteins. If sex is included as a covariate in the DESeq2 model, we may observe reduced noise and improved statistical power.
 
+---
+
+## Results
+FILL IN
 
 ---
 
@@ -103,11 +107,11 @@ Based on the findings of Wahl et al. (2018) and the broader dietary restriction 
 |------|---------|---------|
 | SRA Toolkit | 3.3.0 | Raw data download |
 | Salmon | 1.10.3 | Transcript quantification |
-| R | ADD VERSION | Statistical analysis |
-| DESeq2 | ADD VERSION | Differential expression |
-| tximport | ADD VERSION | Count matrix import |
-| pheatmap | ADD VERSION | Heatmap visualization |
-| ggplot2 | ADD VERSION | General visualization |
+| R | v2025.09.2+418 | Statistical analysis |
+| DESeq2 | v1.48.2 | Differential expression |
+| tximport | v1.36.1 | Count matrix import |
+| pheatmap | v1.0.13 | Heatmap visualization |
+| ggplot2 | v4.0.2 | General visualization |
 
 ---
 
