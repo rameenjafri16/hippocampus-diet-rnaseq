@@ -73,9 +73,11 @@ Genes with an adjusted p-value (Benjamini-Hochberg correction) < 0.05 and absolu
 
 ### 4. Visualization of Data Structure
 
-Overall data structure will be assessed using a sample distance heatmap on variance-stabilizing transformed (VST) counts. A heatmap of the top 50 most variable genes will also be generated using the `pheatmap` package.
+Overall data structure was assessed using a sample-to-sample distance heatmap computed from variance-stabilizing transformed (VST) counts using the DESeq2 vst() function. Euclidean distances between all 30 samples were calculated and visualized using the pheatmap package, with samples annotated by diet group and sex.
 
-### 5. Functional Annotation 
+To visualize differential expression patterns, a heatmap of the top 50 most differentially expressed genes from the CR vs Chow comparison (ranked by adjusted p-value) was generated from VST-normalized counts, with rows scaled by z-score to enable cross-gene comparison.
+
+Differential expression results were visualized using volcano plots constructed with ggplot2, displaying log2 fold change against -log10 p-value for each dietary comparison. Genes with adjusted p-value < 0.05 were highlighted, with upregulated genes shown in red and downregulated genes in blue. The top 15 most significant genes were labelled using the ggrepel package.
 
 ### 6. Functional Enrichment Analysis – Gene Set Enrichment Analysis (GSEA)
 
