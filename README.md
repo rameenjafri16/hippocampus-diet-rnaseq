@@ -30,7 +30,7 @@ Raw sequencing reads for all 30 samples (6 per group) were downloaded from the N
 
 ---
 
-## Total Samples
+#### Total Samples
 - 30 RNA-seq samples  
 - 5 experimental groups  
 - 6 biological replicates per group
@@ -75,9 +75,24 @@ Genes with an adjusted p-value (Benjamini-Hochberg correction) < 0.05 and absolu
 
 Overall data structure will be assessed using a sample distance heatmap on variance-stabilizing transformed (VST) counts. A heatmap of the top 50 most variable genes will also be generated using the `pheatmap` package.
 
-### 5. Functional Annotation and Enrichment Analysis
+### 5. Functional Annotation 
 
-FILL IN 
+### 6. Functional Enrichment Analysis – Gene Set Enrichment Analysis (GSEA)
+
+To interpret transcriptional changes at the pathway level, functional annotation and enrichment analysis were performed using Gene Set Enrichment Analysis (GSEA). Ensembl gene identifiers were mapped to Entrez IDs and gene symbols using the org.Mm.eg.db database to enable biological interpretation and compatibility with downstream enrichment tools.
+
+For each dietary comparison (ChowCR, 5% protein, 10% protein, and 15% protein vs Chow), genes were ranked using the Wald test statistic derived from unshrunken DESeq2 results. Genes with missing statistics were excluded, version numbers were removed from Ensembl IDs for consistent mapping, and duplicate Entrez IDs were filtered. The resulting ranked gene list for each contrast was used as input for enrichment analysis.
+
+GSEA was conducted using clusterProfiler::gseGO() with Gene Ontology (GO) Biological Process terms. Gene sets between 15 and 500 genes were considered, and a nominal p-value cutoff of 0.05 was applied. Unlike over-representation analysis, which depends on predefined significance thresholds, GSEA evaluates the entire ranked gene list, allowing detection of coordinated shifts across biologically related pathways.
+
+The following comparisons were analyzed:
+- **CR vs Chow**
+- **5% Protein vs Chow**
+- **10% Protein vs Chow**
+- **15% Protein vs Chow**
+
+Significantly enriched pathways were visualized using dotplots, with positive and negative enrichment indicating coordinated upregulation and downregulation, respectively.
+
 ---
 
 ## Expected Results
