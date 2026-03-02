@@ -99,19 +99,17 @@ Significantly enriched pathways were visualized using dotplots, with positive an
 
 ---
 
-## Expected Results
+## Aims
 
-Based on the findings of Wahl et al. (2018) and the broader dietary restriction literature, the following outcomes are anticipated:
+The primary aims of this analysis were to: 
 
-**Differential expression:** CR and LPHC diets were previously associated with hundreds of differentially expressed genes in the hippocampus compared to control diet. We expect to recapitulate a dose-dependent pattern of gene expression change across the three protein restriction groups, with the 5% protein group showing the greatest divergence from chow controls.
+(1) determine whether the key transcriptional findings of Wahl et al. (2018) are reproducible using a modern pseudoalignment-based pipeline, 
 
-**Pro- and anti-longevity genes:** Based on Wahl et al. (2018), genes in the GenAge database associated with longevity pathways (SIRT1, mTOR, PGC1α) are expected to show differential expression, particularly in the 5% protein group.
+(2) characterise diet-specific patterns of differential gene expression across all five dietary groups using DESeq2, 
 
-**Neurological pathways:** Dendrite morphogenesis, synapse functioning, and neuronal development pathways were previously identified as significantly affected by dietary protein restriction. We expect ORA/GSEA to similarly implicate these GO terms.
+(3) identify pathway-level changes through GSEA that may not be captured by individual gene analysis alone, and 
 
-**Inflammatory pathways:** Anti-inflammatory cytokine signaling (particularly IL-10 related pathways) may be enriched in the low-protein groups based on prior findings.
-
-**Sex differences:** The original study identified sex-specific effects on nutrient-sensing proteins. If sex is included as a covariate in the DESeq2 model, we may observe reduced noise and improved statistical power.
+(4) assess whether including sex as a covariate improves the detection of diet-specific transcriptional effects given the sex-specific nutrient-sensing differences reported in the original study.
 
 ---
 
