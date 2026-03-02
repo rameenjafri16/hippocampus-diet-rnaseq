@@ -122,7 +122,6 @@ Sample-to-sample distance heatmap computed from variance-stabilizing transformed
 
 &nbsp;
 **Figure 1. Sample-to-sample distance heatmap of hippocampal gene expression across all 30 samples.** 
-
 Euclidean distances were calculated from variance-stabilizing transformed (VST) counts and visualised using hierarchical clustering. Darker blue indicates greater transcriptional similarity between samples; lighter blue indicates greater dissimilarity. Samples are annotated by diet group (Chow, ChowCR, P5, P10, P15) and sex (male, female). 
 
 ### Differential Gene Expression 
@@ -173,7 +172,6 @@ Differential expression results for the CR vs Chow comparison were visualised us
 
 &nbsp;
 **Figure 3. Volcano plot of differential gene expression in the CR vs Chow comparison.** 
-
 Each point represents one gene, plotted by log2 fold change (x-axis) against -log10 p-value (y-axis). Significant DEGs (padj < 0.05) are highlighted in red (upregulated) or blue (downregulated). Non-significant genes are shown in grey. The top 15 most significant DEGs are labelled by gene symbol. Fold change estimates are apeglm-shrunken. Dashed vertical lines indicate log2 fold change of ±1; dashed horizontal line indicates padj = 0.05.
 
 ### Gene Set Enrichment Analysis
@@ -185,7 +183,6 @@ In the CR comparison, activated pathways included glycolytic and glucose metabol
 <img width="1100" height="900" alt="GSEA_P10" src="https://github.com/user-attachments/assets/d7cab23e-b2c1-4f8c-adaa-499f110e9036" />
 <img width="1100" height="900" alt="GSEA_P15" src="https://github.com/user-attachments/assets/5add4bef-69cb-4456-b796-414bfb29b5d5" />
 <img width="1100" height="900" alt="GSEA_P5" src="https://github.com/user-attachments/assets/04096c97-487e-4dec-acef-225f566093e0" />
-
 Figure 4a. GSEA dotplot for CR vs Chow. Figure 4b. GSEA dotplot for 10% Protein vs Chow. Figure 4c. GSEA dotplot for 15% Protein vs Chow. Figure 4d. GSEA dotplot for 5% Protein vs Chow. Dotplots show the top 15 enriched GO Biological Process terms, split by activation (positive enrichment score) and suppression (negative enrichment score). Dot size represents the number of genes in the gene set; dot colour represents adjusted p-value. Genes were ranked by DESeq2 Wald test statistic. Gene sets between 15 and 500 genes were considered.
 
 ---
