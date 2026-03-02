@@ -53,7 +53,7 @@ salmon quant \
 
 Transcript-level counts were imported into R using the `tximport` package (v1.36.1), with transcript-to-gene mapping derived from the Ensembl annotation.
 
-Note: while Wahl et al. (2018) used a Tophat/featureCounts pipeline in the original paper, I used Salmon for quantification as it represents current best practice, offering improved speed and accuracy for transcript-level quantification.
+Note: Salmon was selected over alignment-based approaches such as TopHat2 (used by Wahl et al.) because pseudoalignment-based quantification has been shown to produce comparable or superior accuracy at a fraction of the computational cost (Patro et al., 2017). Similarly, DESeq2 was preferred over the FPKM-based approach used in the original study, as FPKM normalisation is not suitable for between-sample comparisons and does not model count-based overdispersion, whereas DESeq2's negative binomial model provides better statistical control and more accurate fold change estimation (Love et al., 2014). GSEA was chosen over ORA because it evaluates the entire ranked gene list rather than relying on an arbitrary significance threshold, improving sensitivity for detecting coordinated pathway-level changes (Yu et al., 2012).
 
 ### 3. Differential Expression Analysis
 
