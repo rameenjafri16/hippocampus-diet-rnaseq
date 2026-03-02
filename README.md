@@ -163,9 +163,7 @@ A heatmap of the top 50 most significant DEGs from the CR vs Chow comparison was
 <img width="1676" height="1245" alt="image" src="https://github.com/user-attachments/assets/f3a8af1e-9a3b-4ec0-8688-8c07b6cdad93" />
 
 &nbsp;
-
 **Figure 2. Heatmap of the top 50 most significant differentially expressed genes from the CR vs Chow comparison.** 
-
 Genes were selected by ranking all DESeq2 results by adjusted p-value and taking the top 50. Expression values are variance-stabilizing transformed (VST) counts, scaled by z-score across rows to enable cross-gene comparison. Columns are ordered by diet group (CR, P5, P10, P15, Chow) and annotated by diet and sex. Row clustering is based on Euclidean distance with complete linkage.
 
 ### Volcano Plot — Caloric Restriction vs Chow
@@ -174,7 +172,6 @@ Differential expression results for the CR vs Chow comparison were visualised us
 <img width="2700" height="2100" alt="image" src="https://github.com/user-attachments/assets/bf389c47-de6f-43ad-8b3b-f5f2b0effef4" />
 
 &nbsp;
-
 **Figure 3. Volcano plot of differential gene expression in the CR vs Chow comparison.** 
 
 Each point represents one gene, plotted by log2 fold change (x-axis) against -log10 p-value (y-axis). Significant DEGs (padj < 0.05) are highlighted in red (upregulated) or blue (downregulated). Non-significant genes are shown in grey. The top 15 most significant DEGs are labelled by gene symbol. Fold change estimates are apeglm-shrunken. Dashed vertical lines indicate log2 fold change of ±1; dashed horizontal line indicates padj = 0.05.
