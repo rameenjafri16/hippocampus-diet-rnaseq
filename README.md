@@ -119,12 +119,15 @@ Based on the findings of Wahl et al. (2018) and the broader dietary restriction 
 Sample-to-sample distance heatmap computed from variance-stabilizing transformed (VST) counts across all 30 hippocampal samples (Figure 1) was used to asses sample quality and transcriptional structure. One sample (SRR6829578, male Chow) was immediately identifiable as a clear outlier, exhibiting markedly greater transcriptional distance from all other samples, visible as a distinct bright row and column in the heatmap. Despite this outlier, the sample was retained in the analysis as it passed all technical quality metrics including mapping rate and library size, and its removal was not required by the original study's analytical framework. Beyond the outlier, hierarchical clustering revealed that samples did not cluster primarily by diet group, but instead showed substantial inter-individual variability consistent with the high biological heterogeneity expected in hippocampal tissue. Sex was observed as a notable source of transcriptional variation, with male and female samples showing partial separation in the clustering pattern. Interestingly, Wahl et al. (2018) reported no sex-based separation in their PCA of gene expression data and therefore combined sexes for their transcriptional analysis. However, as the authors did identify significant sex-specific differences in hippocampal protein expression — particularly for SIRT1, mTOR, and PGC1α — and given the clear sex-associated variation visible in our sample distance heatmap, sex was retained as a covariate in the DESeq2 design formula to account for this source of variance.
 
 <img width="2400" height="1687" alt="image" src="https://github.com/user-attachments/assets/7748458c-cdcb-42bc-b363-ca1a45516de5" />
-**Figure 1. Sample-to-sample distance heatmap of hippocampal gene expression across all 30 samples.** Euclidean distances were calculated from variance-stabilizing transformed (VST) counts and visualised using hierarchical clustering. Darker blue indicates greater transcriptional similarity between samples; lighter blue indicates greater dissimilarity. Samples are annotated by diet group (Chow, ChowCR, P5, P10, P15) and sex (male, female). 
+**Figure 1. Sample-to-sample distance heatmap of hippocampal gene expression across all 30 samples.** 
+
+Euclidean distances were calculated from variance-stabilizing transformed (VST) counts and visualised using hierarchical clustering. Darker blue indicates greater transcriptional similarity between samples; lighter blue indicates greater dissimilarity. Samples are annotated by diet group (Chow, ChowCR, P5, P10, P15) and sex (male, female). 
 
 ### Differential Gene Expression 
 Differential expression analysis was performed using DESeq2 with sex included as a covariate in the design formula (~ sex + diet), with each dietary group compared against the Chow control diet (19% protein). After low-count filtering — retaining only genes with a minimum of 10 counts in at least 6 samples — 15,133 genes were retained for statistical testing across all comparisons. The number of differentially expressed genes (DEGs, adjusted p-value < 0.05, Benjamini-Hochberg correction) varied substantially across dietary comparisons (Table 1). Caloric restriction produced the strongest transcriptional response with 366 DEGs, followed by 10% protein (116 DEGs), 15% protein (52 DEGs), and 5% protein (4 DEGs).
 
 **Table 1. Summary of differentially expressed genes for each dietary comparison against Chow control.** 
+
 DEGs were identified using DESeq2 with sex as a covariate (design: ~ sex + diet). Significance threshold: adjusted p-value < 0.05 (Benjamini-Hochberg correction). Low-count filtering retained 15,133 genes for testing. CR = caloric restriction; P5, P10, P15 = 5%, 10%, and 15% protein diets respectively.
 | Comparison | Total DEGs | Upregulated | Downregulated |
 |------------|-----------|-------------|---------------|
@@ -137,6 +140,7 @@ DEGs were identified using DESeq2 with sex as a covariate (design: ~ sex + diet)
 The top 10 most significantly differentially expressed genes for each dietary comparison are summarised in Table 2. Across all three protein restriction groups (5%, 10%, and 15% protein), Gpr17 was consistently the most significantly upregulated gene. In the CR comparison, the top hits included Bmal1 (log2FC = -0.40, padj = 5.84×10⁻⁶), Clock (log2FC = -0.25, padj = 6.93×10⁻⁶), Cited2 (log2FC = 0.48, padj = 6.93×10⁻⁶), and Dbp (log2FC = 0.58, padj = 1.27×10⁻⁵). In the 10% protein comparison, top hits included Gpr17 (log2FC = 0.51, padj = 3.17×10⁻⁶), Banp (log2FC = 0.82, padj = 1.14×10⁻⁴), and Sema4b (log2FC = 0.38, padj = 6.85×10⁻⁴). In the 15% protein comparison, Gpr17 (log2FC = 0.54, padj = 3.05×10⁻⁷) was again the top hit, followed by Plin4 (log2FC = 2.00, padj = 1.75×10⁻⁵) and Hspa5 (log2FC = 0.36, padj = 2.58×10⁻³). These findings closely replicate the top gene results reported by Wahl et al. (2018), with Gpr17, Dbp, Cited2, Sema4b, Hspa5, and Plin4 all appearing in both analyses.
 
 **Table 2. Top 10 differentially expressed genes for each dietary comparison against Chow control.** 
+
 Genes are ranked by adjusted p-value. Log2 fold change values are apeglm-shrunken estimates. padj = Benjamini-Hochberg adjusted p-value.
 | Rank | CR Gene | CR log2FC | CR padj | P5 Gene | P5 log2FC | P5 padj | P10 Gene | P10 log2FC | P10 padj | P15 Gene | P15 log2FC | P15 padj |
 |------|---------|-----------|---------|---------|-----------|---------|----------|------------|----------|----------|------------|----------|
@@ -156,6 +160,7 @@ A heatmap of the top 50 most significant DEGs from the CR vs Chow comparison was
 
 <img width="1676" height="1245" alt="image" src="https://github.com/user-attachments/assets/f3a8af1e-9a3b-4ec0-8688-8c07b6cdad93" />
 **Figure 2. Heatmap of the top 50 most significant differentially expressed genes from the CR vs Chow comparison.** 
+
 Genes were selected by ranking all DESeq2 results by adjusted p-value and taking the top 50. Expression values are variance-stabilizing transformed (VST) counts, scaled by z-score across rows to enable cross-gene comparison. Columns are ordered by diet group (CR, P5, P10, P15, Chow) and annotated by diet and sex. Row clustering is based on Euclidean distance with complete linkage.
 
 ### Volcano Plot — Caloric Restriction vs Chow
@@ -163,6 +168,7 @@ Differential expression results for the CR vs Chow comparison were visualised us
 
 <img width="2700" height="2100" alt="image" src="https://github.com/user-attachments/assets/bf389c47-de6f-43ad-8b3b-f5f2b0effef4" />
 **Figure 3. Volcano plot of differential gene expression in the CR vs Chow comparison.** 
+
 Each point represents one gene, plotted by log2 fold change (x-axis) against -log10 p-value (y-axis). Significant DEGs (padj < 0.05) are highlighted in red (upregulated) or blue (downregulated). Non-significant genes are shown in grey. The top 15 most significant DEGs are labelled by gene symbol. Fold change estimates are apeglm-shrunken. Dashed vertical lines indicate log2 fold change of ±1; dashed horizontal line indicates padj = 0.05.
 
 ### Gene Set Enrichment Analysis
