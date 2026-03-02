@@ -178,7 +178,22 @@ Figure 4a. GSEA dotplot for CR vs Chow. Figure 4b. GSEA dotplot for 10% Protein 
 
 ---
 ## Discusion 
-FILL IN 
+This analysis re-examined hippocampal RNA-seq data from Wahl et al. (2018) using a modern pseudoalignment-based quantification pipeline and broadly replicated the paper's key transcriptional findings while revealing additional pathway-level insights through GSEA. Caloric restriction produced the most pronounced transcriptional response (366 DEGs), followed by 10% protein (116 DEGs), 15% protein (52 DEGs), and 5% protein (4 DEGs), consistent with the original study's finding that CR induces more extensive hippocampal gene expression changes than LPHC diets. The non-monotonic relationship between protein restriction severity and DEG count likely reflects high within-group biological variability at dietary extremes rather than a true absence of transcriptional response, a limitation of the small sample size (n=6 per group).
+
+### Circadian Rhythm Remodelling Under Caloric Restriction
+The most interesting finding of this analysis was the disruption of circadian rhythm gene expression under CR, with Bmal1 and Clock downregulated and Dbp upregulated as top CR-associated DEGs. BMAL1 and CLOCK form a heterodimeric transcription factor complex that drives expression of clock-controlled output genes including Dbp, while period and cryptochrome proteins feedback to suppress their activity (Takahashi, 2017). The opposing directional changes observed here suggest CR remodels the phase and amplitude of circadian oscillations in hippocampal tissue rather than simply suppressing or activating the clock. This is biologically significant as hippocampal circadian rhythms regulate memory consolidation, synaptic plasticity, and cognitive aging (Smarr et al., 2014), and CR-induced remodelling of these rhythms may contribute to the cognitive benefits of dietary restriction. That GSEA did not identify circadian rhythm as enriched under CR likely reflects signal concentration in a small number of highly significant individual genes rather than a distributed gene set effect, illustrating a known limitation of set-level testing methods.
+
+### Gpr17 as a Shared Transcriptional Response to Protein Restriction
+Gpr17 was the most significantly upregulated gene across all three protein restriction groups, directly replicating Wahl et al. (2018). Gpr17 encodes an orphan G-protein coupled receptor expressed in oligodendrocyte precursor cells that regulates the transition from immature to mature myelinating oligodendrocytes (Chen et al., 2009). Its consistent upregulation across all degrees of protein restriction but not under CR suggests that reduced dietary protein specifically activates oligodendrocyte precursor signalling independent of caloric intake. This is supported by the GSEA finding that glial cell differentiation was activated under both CR and P15, though the shared involvement of Gpr17 in neuroinflammatory responses means its upregulation could alternatively reflect a nutritional stress response rather than a beneficial adaptive change (Bhatt et al., 2020).
+
+### Pathway-Level Insights and Methodological Considerations
+GSEA revealed coordinated pathway-level changes that were not captured by individual gene analysis alone. Under CR, the activation of glycolytic and glucose metabolic pathways is consistent with the well-established role of caloric restriction in shifting cellular metabolism toward increased glucose utilisation (Fontana & Partridge, 2015). The 10% protein comparison showed a distinct pattern from CR, with suppression of circadian rhythm and synaptic signalling pathways suggesting that moderate protein restriction and caloric restriction affect hippocampal gene expression through partially distinct mechanisms. The 15% protein comparison was dominated by activation of protein folding and ER stress pathways, consistent with Hspa5 as a top DEG which suggest that protein restriction at this level engages a cellular stress response in hippocampal tissue (Walter & Ron, 2011). 
+
+Methodologically, despite differences between the pipeline used here and that of Wahl et al. (who used TopHat2/featureCounts with FPKM normalisation compared to the Salmon/DESeq2 approach used in this analysis) strong concordance in top DEGs across both studies suggests the core biological findings are robust. The inclusion of sex as a covariate, justified by the sex-based clustering observed in the sample distance heatmap and the sex-specific protein expression differences reported by Wahl et al., represents a more statistically rigorous approach that improved power to detect diet-specific transcriptional effects.
+
+Taken together, these findings suggest that caloric restriction and dietary protein restriction engage partially overlapping but still distinct transcriptional mechanisms in the aging hippocampus, with Gpr17 emerging as a consistent molecular signature of protein restriction and circadian rhythm remodelling as a hallmark of caloric restriction, highlighting the potential for diet to modulate hippocampal gene expression in ways relevant to brain aging and cognitive health.
+
+
 ---
 
 ## Dependencies
@@ -202,3 +217,9 @@ FILL IN
 - Patro R, et al. (2017). Salmon provides fast and bias-aware quantification of transcript expression. *Nature Methods*, 14, 417–419.
 - Soneson C, Love MI, Robinson MD. (2015). Differential analyses for RNA-seq: transcript-level estimates improve gene-level inferences. *F1000Research*, 4, 1521.
 - Yu G, et al. (2012). clusterProfiler: an R Package for Comparing Biological Themes Among Gene Clusters. *OMICS*, 16(5), 284–287.
+- Takahashi JS. (2017). Nature Reviews Genetics, 18, 164–179.
+Smarr BL, et al. (2014). A time to remember: the role of circadian clocks in learning and memory. Behavioural Neuroscience, 128(3), 283–303.
+Chen Y, et al. (2009). The oligodendrocyte-specific G protein-coupled receptor GPR17 is a cell-intrinsic timer of myelination. Nature Neuroscience, 12, 1398–1406.
+Lewash M, et al. (2025). orphan G protein-coupled receptor with therapeutic potential. Trends in Pharmacological Sciences, Cell Press. 
+Fontana L, Partridge L. (2015). Promoting health and longevity through diet: from model organisms to humans. Cell, 161(1), 106–118.
+Walter P, Ron D. (2011). The unfolded protein response: from stress pathway to homeostatic regulation. Science, 334(6059), 1081–1086.
