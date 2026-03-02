@@ -120,6 +120,8 @@ Sample-to-sample distance heatmap computed from variance-stabilizing transformed
 
 <img width="2400" height="1687" alt="image" src="https://github.com/user-attachments/assets/7748458c-cdcb-42bc-b363-ca1a45516de5" />
 
+&nbsp;
+
 **Figure 1. Sample-to-sample distance heatmap of hippocampal gene expression across all 30 samples.** 
 
 Euclidean distances were calculated from variance-stabilizing transformed (VST) counts and visualised using hierarchical clustering. Darker blue indicates greater transcriptional similarity between samples; lighter blue indicates greater dissimilarity. Samples are annotated by diet group (Chow, ChowCR, P5, P10, P15) and sex (male, female). 
@@ -161,6 +163,8 @@ A heatmap of the top 50 most significant DEGs from the CR vs Chow comparison was
 
 <img width="1676" height="1245" alt="image" src="https://github.com/user-attachments/assets/f3a8af1e-9a3b-4ec0-8688-8c07b6cdad93" />
 
+&nbsp;
+
 **Figure 2. Heatmap of the top 50 most significant differentially expressed genes from the CR vs Chow comparison.** 
 
 Genes were selected by ranking all DESeq2 results by adjusted p-value and taking the top 50. Expression values are variance-stabilizing transformed (VST) counts, scaled by z-score across rows to enable cross-gene comparison. Columns are ordered by diet group (CR, P5, P10, P15, Chow) and annotated by diet and sex. Row clustering is based on Euclidean distance with complete linkage.
@@ -169,6 +173,8 @@ Genes were selected by ranking all DESeq2 results by adjusted p-value and taking
 Differential expression results for the CR vs Chow comparison were visualised using a volcano plot displaying log2 fold change against -log10 p-value for all 15,133 tested genes (Figure 3). Of 366 significant DEGs (padj < 0.05), 229 were upregulated and 137 were downregulated in CR relative to Chow. The majority of significant genes showed modest fold changes consistent with apeglm shrinkage estimation, with most falling between -0.5 and 0.5 log2 fold change. The most significantly upregulated genes included Dbp (log2FC = 0.58, padj = 1.27×10⁻⁵), Cited2 (log2FC = 0.48, padj = 6.93×10⁻⁶), and Sema6b (log2FC = 0.36, padj = 1.78×10⁻⁵), while the most significantly downregulated genes included Bmal1 (log2FC = -0.40, padj = 5.84×10⁻⁶) and Clock (log2FC = -0.25, padj = 6.93×10⁻⁶).
 
 <img width="2700" height="2100" alt="image" src="https://github.com/user-attachments/assets/bf389c47-de6f-43ad-8b3b-f5f2b0effef4" />
+
+&nbsp;
 
 **Figure 3. Volcano plot of differential gene expression in the CR vs Chow comparison.** 
 
