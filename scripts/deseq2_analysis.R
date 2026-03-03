@@ -365,7 +365,7 @@ p_cr <- pheatmap(mat_de,
 #ggsave("results/figures/heatmap_top_CR_DEGs.png",plot = p_cr$gtable,width = 10,height = 8,dpi = 300)
 
 
-# VOLCANO PLOTS - ONE PER COMPARISON -----
+# VOLCANO PLOTS -----
 make_volcano <- function(res, title) {
   
   res_df <- as.data.frame(res)
@@ -416,10 +416,20 @@ make_volcano <- function(res, title) {
     theme_bw() +
     theme(plot.title = element_text(hjust = 0.5, face = "bold"))
   
-  return(p)}
-p_volcano_CR <- make_volcano(res_CR, "Caloric Restriction vs Chow")
-p_volcano_CR
-#ggsave("results/figures/volcano_CR.png", plot = p_volcano_CR, width = 9, height = 7, dpi = 300)
+  return(p)
+}
+
+# Generate all four volcano plots
+p_volcano_CR  <- make_volcano(res_CR,  "Caloric Restriction vs Chow")
+p_volcano_P5  <- make_volcano(res_P5,  "5% Protein vs Chow")
+p_volcano_P10 <- make_volcano(res_P10, "10% Protein vs Chow")
+p_volcano_P15 <- make_volcano(res_P15, "15% Protein vs Chow")
+
+p_volcano_all <- (p_volcano_CR | p_volcano_P5) / (p_volcano_P10 | p_volcano_P15)
+
+ggsave("results/figures/volcano_all_comparisons.png", 
+       plot = p_volcano_all, 
+       width = 18, height = 14, dpi = 300)
 
 # FUNCTIONAL ENRICHMENT ANALYSIS - GSEA -----
 # GSEA uses the full ranked gene list - detects pathway shifts without a significance cutoff
@@ -430,6 +440,7 @@ res_P10_unshrunken <- results(dds, contrast=c("diet","P10","Chow"))
 res_P15_unshrunken <- results(dds, contrast=c("diet","P15","Chow"))
 
 colnames(as.data.frame(res_CR_unshrunken))
+
 run_GSEA <- function(res, comparison_name) {
   
   # Convert to dataframe explicitly and extract stat column
@@ -467,25 +478,39 @@ run_GSEA <- function(res, comparison_name) {
                        verbose = FALSE)
   
   cat(comparison_name, ": found", nrow(gsea_result), "enriched terms\n")
-  return(gsea_result)}
+  return(gsea_result)
+}
 
 gsea_CR  <- run_GSEA(res_CR_unshrunken,  "CR vs Chow")
 gsea_P5  <- run_GSEA(res_P5_unshrunken,  "P5 vs Chow")
 gsea_P10 <- run_GSEA(res_P10_unshrunken, "P10 vs Chow")
 gsea_P15 <- run_GSEA(res_P15_unshrunken, "P15 vs Chow")
 
-for (gsea_obj in list(list(gsea_CR,  "GSEA_CR",  "CR vs Chow"),
-                      list(gsea_P5,  "GSEA_P5",  "5% Protein vs Chow"),
-                      list(gsea_P10, "GSEA_P10", "10% Protein vs Chow"),
-                      list(gsea_P15, "GSEA_P15", "15% Protein vs Chow"))) {
-  
-  if (!is.null(gsea_obj[[1]]) && nrow(gsea_obj[[1]]) > 0) {
-    png(paste0("results/figures/", gsea_obj[[2]], ".png"), width=1100, height=900)
-    print(dotplot(gsea_obj[[1]], showCategory=15, split=".sign") +
-            facet_grid(.~.sign) +
-            ggtitle(paste("GSEA GO BP:", gsea_obj[[3]])) +
-            theme(plot.title = element_text(hjust=0.5, face="bold")))
-    dev.off()
-    system(paste0("open results/figures/", gsea_obj[[2]], ".png"))}}
+# GSEA PLOTS - COMBINED 4-PANEL -----
+# Make individual GSEA dotplots as ggplot objects
+make_gsea_plot <- function(gsea_obj, title) {
+  if (!is.null(gsea_obj) && nrow(gsea_obj) > 0) {
+    p <- dotplot(gsea_obj, showCategory = 10, split = ".sign") +
+      facet_grid(.~.sign) +
+      ggtitle(title) +
+      theme_bw() +
+      theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 10),
+            axis.text.y = element_text(size = 7),
+            strip.text = element_text(size = 9))
+    return(p)
+  }
+}
+
+p_gsea_CR  <- make_gsea_plot(gsea_CR,  "CR vs Chow")
+p_gsea_P5  <- make_gsea_plot(gsea_P5,  "5% Protein vs Chow")
+p_gsea_P10 <- make_gsea_plot(gsea_P10, "10% Protein vs Chow")
+p_gsea_P15 <- make_gsea_plot(gsea_P15, "15% Protein vs Chow")
+
+# Combine into 2x2 panel
+p_gsea_all <- (p_gsea_CR | p_gsea_P10) / (p_gsea_P15 | p_gsea_P5)
+
+ggsave("results/figures/GSEA_all_comparisons.png",
+       plot = p_gsea_all,
+       width = 20, height = 16, dpi = 300)
 
 cat("Analysis complete! Results saved to results\n")
