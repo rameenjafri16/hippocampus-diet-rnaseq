@@ -71,7 +71,9 @@ Each dietary group will be compared against the Chow control:
 - Chow vs. 10% protein
 - Chow vs. 5% protein
 
-Genes with an adjusted p-value (Benjamini-Hochberg correction) < 0.05 and absolute log2 fold change > 1 will be considered differentially expressed.
+Fold change estimates were regularised using apeglm shrinkage to improve accuracy for lowly expressed genes (Zhu et al., 2018). MA plots were generated for all four comparisons using DESeq2's plotMA() function to verify that size-factor normalisation was appropriate, with the expectation that the cloud of non-significant genes should be centred at zero fold change across the range of mean expression (Love et al., 2014).
+
+Genes with an adjusted p-value (Benjamini-Hochberg correction) < 0.05 will be considered differentially expressed.
 
 ### 4. Visualization of Data Structure
 
@@ -86,6 +88,8 @@ Differential expression results were visualized using volcano plots constructed 
 To interpret transcriptional changes at the pathway level, functional annotation and enrichment analysis were performed using Gene Set Enrichment Analysis (GSEA). Ensembl gene identifiers were mapped to Entrez IDs and gene symbols using the org.Mm.eg.db database to enable biological interpretation and compatibility with downstream enrichment tools.
 
 For each dietary comparison (ChowCR, 5% protein, 10% protein, and 15% protein vs Chow), genes were ranked using the Wald test statistic derived from unshrunken DESeq2 results. Genes with missing statistics were excluded, version numbers were removed from Ensembl IDs for consistent mapping, and duplicate Entrez IDs were filtered. The resulting ranked gene list for each contrast was used as input for enrichment analysis.
+
+MA plots were generated for all four comparisons using DESeq2's plotMA() function to verify that size-factor normalisation was appropriate, with the expectation that the cloud of non-significant genes should be centred at zero fold change across the range of mean expression (Love et al., 2014).
 
 GSEA was conducted using clusterProfiler::gseGO() with Gene Ontology (GO) Biological Process terms. Gene sets between 15 and 500 genes were considered, and a nominal p-value cutoff of 0.05 was applied. Unlike over-representation analysis, which depends on predefined significance thresholds, GSEA evaluates the entire ranked gene list, allowing detection of coordinated shifts across biologically related pathways.
 
@@ -165,25 +169,26 @@ A heatmap of the top 50 most significant DEGs from the CR vs Chow comparison was
 **Figure 2. Heatmap of the top 50 most significant differentially expressed genes from the CR vs Chow comparison.** 
 Genes were selected by ranking all DESeq2 results by adjusted p-value and taking the top 50. Expression values are variance-stabilizing transformed (VST) counts, scaled by z-score across rows to enable cross-gene comparison. Columns are ordered by diet group (CR, P5, P10, P15, Chow) and annotated by diet and sex. Row clustering is based on Euclidean distance with complete linkage.
 
-### Volcano Plot — Caloric Restriction vs Chow
-Differential expression results for the CR vs Chow comparison were visualised using a volcano plot displaying log2 fold change against -log10 p-value for all 15,133 tested genes (Figure 3). Of 366 significant DEGs (padj < 0.05), 194 were upregulated and 172 were downregulated in CR relative to Chow. The majority of significant genes showed modest fold changes consistent with apeglm shrinkage estimation, with most falling between -0.5 and 0.5 log2 fold change. The most significantly upregulated genes included Dbp (log2FC = 0.58, padj = 1.27×10⁻⁵), Cited2 (log2FC = 0.48, padj = 6.93×10⁻⁶), and Sema6b (log2FC = 0.36, padj = 1.78×10⁻⁵), while the most significantly downregulated genes included Bmal1 (log2FC = -0.40, padj = 5.84×10⁻⁶) and Clock (log2FC = -0.25, padj = 6.93×10⁻⁶).
+Volcano Plots — All Dietary ComparisonsDifferential expression results for all four dietary comparisons were visualised as a 4-panel volcano plot displaying log2 fold change against -log10 p-value for all 15,133 tested genes (Figure 3). The number of significant DEGs (padj < 0.05) varied substantially across comparisons, with CR producing the most pronounced transcriptional response (366 DEGs: 194 upregulated, 172 downregulated), followed by 10% protein (116 DEGs: 70 upregulated, 46 downregulated), 15% protein (52 DEGs: 38 upregulated, 14 downregulated), and 5% protein (4 DEGs: 2 upregulated, 2 downregulated).
 
-<img width="2700" height="2100" alt="image" src="https://github.com/user-attachments/assets/bf389c47-de6f-43ad-8b3b-f5f2b0effef4" />
+In the CR panel, the cloud of significant genes is notably asymmetric, with downregulated genes showing slightly greater spread in fold change magnitude than upregulated genes, and top hits including the circadian genes Bmal1 (log2FC = -0.40, padj = 5.84×10⁻⁶) and Clock (log2FC = -0.25, padj = 6.93×10⁻⁶) among the most significantly downregulated, and Dbp (log2FC = 0.58, padj = 1.27×10⁻⁵) and Cited2 (log2FC = 0.48, padj = 6.93×10⁻⁶) among the most significantly upregulated. In the 10% protein panel, Gpr17 was the most significantly upregulated gene (log2FC = 0.51, padj = 3.17×10⁻⁶), with Kcnj2 the most significantly downregulated (log2FC = -0.54, padj = 3.30×10⁻⁴). The 15% protein panel was similarly dominated by Gpr17 upregulation (log2FC = 0.54, padj = 3.05×10⁻⁷), but is visually distinguished by Plin4 as a clear outlier sitting far to the right of all other genes with the largest fold change observed across all four comparisons (log2FC = 2.00, padj = 1.75×10⁻⁵), extending the x-axis to ~2 compared to ±1 in the other panels. The 5% protein panel was visually sparse, with only 4 DEGs clustered near the significance threshold, confirming the low statistical power in this group, with Gpr17 and Mrpl23-ps1 the only clearly labelled significant genes.
+
+<img width="5400" height="4200" alt="image" src="https://github.com/user-attachments/assets/c625e502-944a-4812-9652-61ecb79a6b26" />
 
 &nbsp;
-**Figure 3. Volcano plot of differential gene expression in the CR vs Chow comparison.** 
-Each point represents one gene, plotted by log2 fold change (x-axis) against -log10 p-value (y-axis). Significant DEGs (padj < 0.05) are highlighted in red (upregulated) or blue (downregulated). Non-significant genes are shown in grey. The top 15 most significant DEGs are labelled by gene symbol. Fold change estimates are apeglm-shrunken. Dashed vertical lines indicate log2 fold change of ±1; dashed horizontal line indicates padj = 0.05.
+**Figure 3. Volcano plot of differential gene expression for all four dietary comparisons against Chow control.** 
+Each point represents one gene, plotted by log2 fold change (x-axis) against -log10 p-value (y-axis). Significant DEGs (padj < 0.05) are highlighted in dark red (upregulated) or steel blue (downregulated). Non-significant genes are shown in grey. The top 15 most significant DEGs are labelled by gene symbol where available — the 5% protein panel shows fewer labels due to the small number of significant genes in that comparison. Fold change estimates are apeglm-shrunken. Dashed vertical lines indicate log2 fold change of ±1; dashed horizontal line indicates padj = 0.05. Note that x-axis scales differ across panels due to the large fold change of Plin4 in the 15% protein comparison. Panels show (a) CR vs Chow, (b) 5% Protein vs Chow, (c) 10% Protein vs Chow, (d) 15% Protein vs Chow.
 
 ### Gene Set Enrichment Analysis
 Gene set enrichment analysis (GSEA) was performed for all four dietary comparisons using genes ranked by DESeq2 Wald test statistic, allowing detection of coordinated pathway-level changes across the full transcriptome independent of significance thresholds. The number of significantly enriched GO Biological Process terms (nominal p-value < 0.05) varied across comparisons: CR yielded 31 enriched terms, 10% protein yielded 26, 15% protein yielded 65, and 5% protein yielded 8.
 
 In the CR comparison, activated pathways included glycolytic and glucose metabolic processes, glial cell differentiation, and regulation of neurogenesis, while sensory perception pathways were suppressed (Figure 4a). In the 10% protein comparison, canonical glycolysis pathways were activated alongside suppression of circadian rhythm and regulation of synaptic vesicle exocytosis pathways (Figure 4b). The 15% protein comparison was dominated by activation of protein folding, endoplasmic reticulum stress response, and chaperone-mediated protein folding pathways, with no suppressed terms reaching significance (Figure 4c). The 5% protein comparison yielded 8 suppressed terms including cilium movement and potassium ion transport, with no activated terms reaching significance (Figure 4d).
 
-<img width="1100" height="900" alt="GSEA_CR" src="https://github.com/user-attachments/assets/9994f86c-6b3f-4aba-8544-aaa7c5d75ed1" />
-<img width="1100" height="900" alt="GSEA_P10" src="https://github.com/user-attachments/assets/d7cab23e-b2c1-4f8c-adaa-499f110e9036" />
-<img width="1100" height="900" alt="GSEA_P15" src="https://github.com/user-attachments/assets/5add4bef-69cb-4456-b796-414bfb29b5d5" />
-<img width="1100" height="900" alt="GSEA_P5" src="https://github.com/user-attachments/assets/04096c97-487e-4dec-acef-225f566093e0" />
-Figure 4a. GSEA dotplot for CR vs Chow. Figure 4b. GSEA dotplot for 10% Protein vs Chow. Figure 4c. GSEA dotplot for 15% Protein vs Chow. Figure 4d. GSEA dotplot for 5% Protein vs Chow. Dotplots show the top 15 enriched GO Biological Process terms, split by activation (positive enrichment score) and suppression (negative enrichment score). Dot size represents the number of genes in the gene set; dot colour represents adjusted p-value. Genes were ranked by DESeq2 Wald test statistic. Gene sets between 15 and 500 genes were considered.
+<img width="6000" height="4800" alt="image" src="https://github.com/user-attachments/assets/b93b3920-1f3f-4422-978a-aefff39e421c" />
+
+&nbsp;
+**Figure 4. GSEA dotplots for all four dietary comparisons against Chow control.**
+The top 10 enriched GO Biological Process terms are shown per comparison, split by activation (positive enrichment score) and suppression (negative enrichment score) where applicable. Dot size represents the number of genes in the gene set; dot colour represents adjusted p-value, with scales independent across panels. Genes were ranked by DESeq2 Wald test statistic derived from unshrunken results. Gene sets between 15 and 500 genes were considered; a nominal p-value cutoff of 0.05 was applied. The 15% protein panel shows only activated terms as no suppressed pathways reached significance; the 5% protein panel shows only suppressed terms as no activated pathways reached significance. Note that some enriched terms in the 5% protein panel (sperm motility, flagellated sperm motility) likely reflect shared ciliary gene sets rather than literal biological processes in hippocampal tissue. Panels show (a) CR vs Chow, (b) 10% Protein vs Chow, (c) 15% Protein vs Chow, (d) 5% Protein vs Chow.
 
 ---
 
@@ -202,6 +207,14 @@ GSEA revealed coordinated pathway-level changes that were not captured by indivi
 Methodologically, despite differences between the pipeline used here and that of Wahl et al. (who used TopHat2/featureCounts with FPKM normalisation compared to the Salmon/DESeq2 approach used in this analysis) strong concordance in top DEGs across both studies suggests the core biological findings are robust. The inclusion of sex as a covariate, justified by the sex-based clustering observed in the sample distance heatmap and the sex-specific protein expression differences reported by Wahl et al., represents a more statistically rigorous approach that improved power to detect diet-specific transcriptional effects.
 
 Taken together, these findings suggest that caloric restriction and dietary protein restriction engage partially overlapping but still distinct transcriptional mechanisms in the aging hippocampus, with Gpr17 emerging as a consistent molecular signature of protein restriction and circadian rhythm remodelling as a hallmark of caloric restriction, highlighting the potential for diet to modulate hippocampal gene expression in ways relevant to brain aging and cognitive health.
+
+---
+
+## Supplementary Figures
+<img width="3600" height="3000" alt="image" src="https://github.com/user-attachments/assets/ddefbee3-76f8-4f24-9900-24b1039df7f6" />
+
+**Figure S1. MA plots for all four dietary comparisons against Chow control.**
+Each point represents one gene, plotted by mean normalised expression (x-axis, log scale) against log2 fold change (y-axis). Significant DEGs (padj < 0.05) are highlighted in blue. The cloud of non-significant genes is centred at zero across all comparisons, confirming that size-factor normalisation was appropriate and no systematic bias is present. Panels show (a) CR vs Chow, (b) 5% Protein vs Chow, (c) 10% Protein vs Chow, (d) 15% Protein vs Chow.
 
 
 ---
