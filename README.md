@@ -5,27 +5,6 @@
 **Dataset:** GSE111778 — Wahl et al. (2018), *Cell Reports*
 
 ---
-hippocampus-diet-rnaseq/
-├── data/
-│   └── metadata.csv            # Sample metadata (diet group, sex, SRA accessions)
-├── scripts/
-│   ├── 01_salmon_quant.sh      # Salmon pseudoalignment
-│   ├── 02_tximport.R           # Count matrix import
-│   ├── 03_deseq2.R             # Differential expression analysis
-│   ├── 04_visualisation.R      # Heatmaps, volcano plots, MA plots
-│   └── 05_gsea.R               # GSEA with clusterProfiler
-├── results/
-│   ├── deseq2/                 # DESeq2 result tables per comparison
-│   └── gsea/                   # GSEA result tables per comparison
-├── figures/
-│   ├── sample_distance_heatmap.png
-│   ├── top50_deg_heatmap.png
-│   ├── volcano_plots.png
-│   ├── ma_plots.png
-│   └── gsea_dotplots.png
-└── report/
-    └── report.md               # Full methods, results, and discussion
----
 
 ## Background
 
